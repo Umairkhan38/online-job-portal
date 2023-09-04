@@ -8,6 +8,9 @@ const cors=require('cors');
 const cookieParser = require('cookie-parser');
 const errorHandler=require('./middleware/Error')
 const authRoutes = require('./Routes/authRoutes')
+const userRoutes = require('./Routes/userRoutes')
+const jobTypeRoutes = require('./Routes/jobTypeRoutes')
+const jobRoutes = require('./Routes/jobRoutes');
 
 //error middleware
 app.use(errorHandler)
@@ -36,7 +39,9 @@ mongoose.connect(process.env.DATABASE,{
 
     //routes
     app.use('/api', authRoutes);
-
+    app.use('/api', userRoutes);
+    app.use('/api',jobTypeRoutes);
+    app.use('/api',jobRoutes);
 
 
 
