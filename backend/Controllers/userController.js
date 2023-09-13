@@ -13,8 +13,8 @@ exports.allUsers = async (req,res,next)=>{
     try{
         const users =await User.find().sort({createdAt: -1}).select('-passsword')
         .skip(pageSize * (page-1))
-        .limit(pageSize);
-
+        .limit(pageSize)
+        
         res.status(200).json({
             success:true,
             users,
@@ -65,6 +65,43 @@ exports.deleteUser = async (req, res, next) => {
         res.status(200).json({
             success: true,
             message: "user deleted"
+        })
+        next();
+
+    } catch (error) {
+        return next(error);
+    }
+}
+
+
+//Job History
+
+exports.createUserJobHistory = async (req, res, next) => {
+
+    const {title, description, salary, location} = req.body;
+
+    try {
+        const currentUser = await User.findOne({_id:req.user._id});
+          
+        if(!currentUser){
+            return next(new ErrorResponse("You must logged In",401))
+        } else{
+            const addJobHistory={
+                title,
+                description,
+                salary,
+                location,
+                user:req.user._id
+            }
+
+            currentUser.jobHistory.push(addJobHistory)
+            await currentUser.save();
+
+        }  
+
+        res.status(200).json({
+            success: true,
+            currentUser,
         })
         next();
 
