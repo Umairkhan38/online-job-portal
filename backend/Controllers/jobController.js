@@ -62,7 +62,6 @@ exports.updateJob = async(req,res,next)=>{
 //display posted jobs
 exports.showJobs=async(req,res,next)=>{
 
-
     //filter jobs by category
     let ids=[];
     const jobTypeCategory = await jobType.find({}, {_id:1});
@@ -92,24 +91,26 @@ exports.showJobs=async(req,res,next)=>{
         locations.push(val.location);
     })
 
-    let setUniqueLocations = [...new Set(locations)];
+    let setUniqueLocation = [...new Set(locations)];
     let locationFilter = locations !== '' ? locations : setUniqueLocations; 
 
     const pageSize=5;
     const page = Number(req.query.pageNumber) || 1; 
     // const count = await Job.find({}).estimatedDocumentCount();  //count of job object
+   
     const count = await Job.find({ ...keyword, jobType:categ, location:locationFilter }).countDocuments(); 
 
+    console.log("the document count is ",count);
 
     try{
-       const jobs =await Job.find({...keyword , jobType:categ, location:locationFilter }).sort({createdAt:-1}).skip(pageSize*(page-1)).limit(pageSize);
+       const jobs = await Job.find({...keyword , jobType:categ, location:locationFilter }).sort({createdAt:-1}).skip(pageSize*(page-1)).limit(pageSize);
         res.status(200).json({
             success:true,
             jobs,
             page,
             pages:Math.ceil(count / pageSize),
             count,
-            setUniqueLocations
+            setUniqueLocation
         })
 
     }
@@ -118,4 +119,5 @@ exports.showJobs=async(req,res,next)=>{
     }
 
 }
+
 
