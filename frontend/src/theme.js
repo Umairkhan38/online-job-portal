@@ -5,11 +5,11 @@ import {blue, lightBlue} from '@mui/material/colors';
 export const theme=createTheme({
     palette:{
         primary:{
-            main:blue[500]
+            main:'rgb(39 130 132)'
 },
         secondary:{
-            main:lightBlue[800],
-            midNightBlue: "#003366"
+            main:'rgb(39 130 132)',
+            midNightBlue: "rgb(39 130 132)"
         }
     }
 

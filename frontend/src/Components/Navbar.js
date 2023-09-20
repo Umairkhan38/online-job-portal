@@ -37,10 +37,10 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="static" style={{backgroundColor:"rgb(23 48 114)"}}>
+    <AppBar position="static" style={{backgroundColor:"rgb(39 130 132)"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <WorkIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }} />
+          <WorkIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 , color:'white'}} />
           <Typography
             variant="h6"
             noWrap
@@ -52,7 +52,7 @@ function Navbar() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: 'white',
               textDecoration: 'none',
             }}
           >
