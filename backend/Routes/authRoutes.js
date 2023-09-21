@@ -4,7 +4,7 @@ const {signIn,signUp, logout, userProfile} = require('../Controllers/authControl
 const { isAuthenticated } = require('../middleware/auth');
 
 //auth routes
-router.get('/signin',signIn);
+router.post('/signin',signIn);
 
 router.post('/signup',signUp);
 

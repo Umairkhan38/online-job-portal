@@ -41,6 +41,7 @@ function Home() {
     setCat(e.target.value);
 }
 
+
   return (
     <>
     <Box sx={{bgColor:'#fafafa', minHeight:'100vh'}}>
@@ -93,18 +94,18 @@ function Home() {
               <LoadingBox /> 
               :
               jobs && jobs.length === 0 ?
-                                        <>
-                                            <Box
-                                                sx={{
-                                                    minHeight: '350px',
-                                                    display: 'flex',
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center'
-                                                }}>
+            <>
+                <Box
+                    sx={{
+                        minHeight: '350px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
 
-                                                <h2>No result found!</h2>
-                                            </Box>
-                                        </> :
+                    <h2>No result found!</h2>
+                </Box>
+            </> :
               jobs&&jobs.map((job,i)=>{
               return  <CardElement
                   key={i}
