@@ -2,15 +2,14 @@ import { Avatar, Box } from '@mui/material'
 import React, { useEffect } from 'react'
 import Footer from '../Components/Footer'
 import Navbar from '../Components/Navbar'
+import LockClockOutlined from '@mui/icons-material/LockClockOutlined'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux'
 import { userSignInAction } from '../redux/actions/userAction'
-import { useNavigate } from 'react-router-dom';
-import WorkIcon from '@mui/icons-material/Work';
-
+import { useNavigate } from 'react-router-dom'
 
 const validationSchema = yup.object({
     email: yup
@@ -52,14 +51,13 @@ const LogIn = () => {
     return (
         <>
             <Navbar />
-            <Box sx={{ height: '85vh', display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Box sx={{ height: '81vh', display: "flex", alignItems: "center", justifyContent: "center" }}>
 
 
                 <Box onSubmit={formik.handleSubmit} component="form" className='form_style border-style' >
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
                         <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
-                        <WorkIcon  />
-
+                            <LockClockOutlined />
                         </Avatar>
                         <TextField sx={{ mb: 3 }}
                             fullWidth

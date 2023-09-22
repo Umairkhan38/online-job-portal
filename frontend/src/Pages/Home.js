@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import { jobAction } from '../redux/actions/jobAction'
 import { useState } from 'react'
 import {useParams,Link} from 'react-router-dom'
-import CardElement from '../Components/cardElement'
+import CardElement from '../Components/CardElement'
 import Footer from '../Components/Footer'
 import LoadingBox from '../Components/LoadingBox'
 import LocationOnIcon from '@mui/icons-material/LocationOn';
