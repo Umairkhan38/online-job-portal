@@ -17,7 +17,8 @@ import {
 export const userSignInAction = (user) => async (dispatch) => {
     dispatch({ type: USER_SIGNIN_REQUEST });
     try {
-        const { data } = await axios.post("http://localhost:8000/api/signin", user);
+        const { data } = await axios.post("http://localhost:8000/api/signin",user,
+        {withCredentials: true, credentials: 'include'});
         localStorage.setItem('userInfo', JSON.stringify(data));
         dispatch({
             type: USER_SIGNIN_SUCCESS,
@@ -37,7 +38,7 @@ export const userSignInAction = (user) => async (dispatch) => {
 export const userLogoutAction = () => async (dispatch) => {
     dispatch({ type: USER_LOGOUT_REQUEST });
     try {
-        const { data } = await axios.get("/api/logout");
+        const { data } = await axios.get("http://localhost:8000/api/logout");
         localStorage.removeItem('userInfo');
         dispatch({
             type: USER_LOGOUT_SUCCESS,
@@ -58,7 +59,8 @@ export const userLogoutAction = () => async (dispatch) => {
 export const userProfileAction = () => async (dispatch) => {
     dispatch({ type: USER_LOAD_REQUEST });
     try {
-        const { data } = await axios.get("/api/me");
+        const { data } = await axios.get("http://localhost:8000/api/me", {withCredentials: true, credentials: 'include'});
+        console.log("the data is",data)
         dispatch({
             type: USER_LOAD_SUCCESS,
             payload: data

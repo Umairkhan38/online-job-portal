@@ -29,6 +29,7 @@ exports.allUsers = async (req,res,next)=>{
     }
 }
 
+
 exports.singleUser = async (req, res, next) => {
     try {
         const user = await User.findById(req.params.id);

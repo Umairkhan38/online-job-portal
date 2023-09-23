@@ -1,16 +1,13 @@
 import { Typography } from '@mui/material'
 import { Box } from '@mui/material'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import CardElement from '../../Components/CardElement'
-import { userProfileAction } from '../../redux/actions/userAction'
+
 
 const UserJobsHistory = () => {
     const { user } = useSelector(state => state.userProfile);
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(userProfileAction());
-    }, []);
+    console.log("user is ",user)
 
     return (
         <>
@@ -18,7 +15,7 @@ const UserJobsHistory = () => {
                 <Typography variant="h4" sx={{ color: "#fafafa" }}> Jobs History</Typography>
                 <Box>
                     {
-                        user && user.jobsHistory.map((history, i) => (
+                        user && user.jobHistory.map((history, i) => (
                             <CardElement
                                 key={i}
                                 id={history._id}

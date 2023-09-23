@@ -17,7 +17,6 @@ router.put('/type/update/:type_id', isAuthenticated, isAdmin, updateJobType);
 //api/type/delete/type_id
 router.delete('/type/delete/:type_id',isAuthenticated,isAdmin,deleteJobType);
 
-//api/user/jobhistory
-router.post('/user/jobhistory',isAuthenticated,createUserJobHistory)
+
 
 module.exports = router;

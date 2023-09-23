@@ -5,26 +5,26 @@ const morgan=require('morgan')
 const bodyParser=require('body-parser')
 require('dotenv').config();
 const cors=require('cors');
-const cookieParser = require('cookie-parser');
-const errorHandler=require('./middleware/Error')
 const authRoutes = require('./Routes/authRoutes')
 const userRoutes = require('./Routes/userRoutes')
 const jobTypeRoutes = require('./Routes/jobTypeRoutes')
 const jobRoutes = require('./Routes/jobRoutes');
+const cookieParser = require('cookie-parser');
+const errorHandler=require('./middleware/Error')
 
 //error middleware
-app.use(errorHandler)
 
 //middleware
+app.use(morgan('dev'));
+
 app.use(bodyParser.json({limit:'5mb'}));
 app.use(bodyParser.urlencoded({
     limit:'5mb',
     extended:true
 }));
-app.use(cors());
 
-app.use(morgan('dev'));
 app.use(cookieParser());
+app.use(cors({ origin: true, credentials: true }));
 
 
 //port 
@@ -43,6 +43,7 @@ mongoose.connect(process.env.DATABASE,{
     app.use('/api',jobTypeRoutes);
     app.use('/api',jobRoutes);
 
+    app.use(errorHandler)
 
 
 app.listen(port,()=>{
