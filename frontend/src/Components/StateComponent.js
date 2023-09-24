@@ -14,7 +14,7 @@ const StatComponent = ({ value, icon, description, money }) => {
                     <Typography variant='h4' sx={{ color: "#fafafa", mb: '1px', fontWeight: 700 }}>
                         {money !== '' ? money + value : value}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: palette.primary.main, mb: 0 }}>
+                    <Typography variant="body2" sx={{ color:"white", mb: 0 }}>
                         {description}
                     </Typography>
                 </CardContent>
