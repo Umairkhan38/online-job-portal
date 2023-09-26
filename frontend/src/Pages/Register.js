@@ -8,7 +8,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux'
 import { userSignUpAction } from '../redux/actions/userAction'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const validationSchema = yup.object({
@@ -60,14 +60,15 @@ const Register = () => {
     return (
         <>
             <Navbar />
-            <Box sx={{ height: '81vh', display: "flex", alignItems: "center", justifyContent: "center", bgcolor: "primary.white" }}>
+            <Box sx={{ height: '100vh', display: "flex", alignItems: "center", justifyContent: "center", bgcolor: "primary.white" }}>
 
 
                 <Box onSubmit={formik.handleSubmit} component="form" className='form_style border-style' >
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-                        <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
-                            <LockOpenIcon />
+                        <Avatar sx={{ bgcolor: "primary.main" }}>
+                            <LockOpenIcon /> 
                         </Avatar>
+                        <h2>Signup </h2>
                         <TextField
                             sx={{
                                 mb: 3,
@@ -162,6 +163,7 @@ const Register = () => {
                         />
 
                         <Button fullWidth variant="contained" type='submit' >Register</Button>
+                        <Link to='/login' style={{margin:"5px 0px",color:"teal"}}>Already have an account?</Link>
                     </Box>
                 </Box>
             </Box>

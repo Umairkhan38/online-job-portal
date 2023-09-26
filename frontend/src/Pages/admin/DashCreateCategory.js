@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux'
 import { createJobTypeAction } from '../../redux/actions/jobTypeAction';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -20,6 +21,7 @@ const DashCreateCategory = () => {
 
     const { user } = useSelector(state => state.userProfile);
     const dispatch = useDispatch();
+    const navigate=useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -31,6 +33,9 @@ const DashCreateCategory = () => {
             dispatch(createJobTypeAction(values))
             //alert(JSON.stringify(values, null, 2));
             actions.resetForm();
+            setTimeout(()=>{
+                navigate('/admin/category')
+            },300)
         },
     });
 

@@ -124,8 +124,6 @@ export const allUserAction = () => async (dispatch) => {
 
 
 
-
-
 //user job apply action
 export const userApplyJobAction = (job) => async (dispatch) => {
     dispatch({ type: USER_APPLY_JOB_REQUEST });

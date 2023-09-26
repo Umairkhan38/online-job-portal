@@ -23,10 +23,8 @@ const DashJobs = () => {
     data = (jobs !== undefined && jobs.length > 0) ? jobs : []
 
 
-    //delete job by Id
-    const deleteJobById = (e, id) => {
-        console.log(id)
-    }
+
+  
 
     const columns = [
 
@@ -72,17 +70,6 @@ const DashJobs = () => {
                 "$" + values.row.salary
             ))
 
-        },
-
-        {
-            field: "Actions",
-            width: 200,
-            renderCell: (values) => (
-                <Box sx={{ display: "flex", justifyContent: "space-between", width: "170px" }}>
-                    <Button variant="contained"><Link style={{ color: "white", textDecoration: "none" }} to={`/admin/edit/job/${values.row._id}`}>Edit</Link></ Button>
-                    < Button onClick={(e) => deleteJobById(e, values.row._id)} variant="contained" color="error">Delete</ Button>
-                </Box>
-            )
         }
     ];
 

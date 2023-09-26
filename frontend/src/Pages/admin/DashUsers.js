@@ -1,29 +1,25 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Button, IconButton, Paper, Typography } from '@mui/material'
 import { DataGrid, gridClasses, GridToolbar } from '@mui/x-data-grid';
-import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment'
-import { allUserAction } from '../../redux/actions/userAction';
+import { allUserAction, deleteUserAction } from '../../redux/actions/userAction';
+
 
 const DashUsers = () => {
 
     const dispatch = useDispatch();
+    const { users, loading } = useSelector(state => state.allUsers);
+    let data = [];
+    data = (users !== undefined && users.length > 0) ? users : []
 
     useEffect(() => {
         dispatch(allUserAction());
     }, []);
 
-
-    const { users, loading } = useSelector(state => state.allUsers);
-    let data = [];
-    data = (users !== undefined && users.length > 0) ? users : []
-
-    const deleteUserById = (e, id) => {
-        console.log(id);
-    }
-
+    
+  
     const columns = [
 
         {
@@ -38,6 +34,11 @@ const DashUsers = () => {
             headerName: 'E_mail',
             width: 150,
         },
+        {
+            field: 'firstName',
+            headerName: 'firstName',
+            width: 150,
+        },
 
         {
             field: 'role',
@@ -49,6 +50,16 @@ const DashUsers = () => {
         },
 
         {
+            field: 'jobHistory',
+            headerName: 'Last Applied Job',
+            width: 200,
+            valueGetter: (params) => {
+                console.log("params is ",params)
+                return params?.value[(params?.value?.length)-1]?.title
+              }           
+        },
+
+        {
             field: 'createdAt',
             headerName: 'Creation date',
             width: 150,
@@ -57,16 +68,7 @@ const DashUsers = () => {
             )
         },
 
-        {
-            field: "Actions",
-            width: 200,
-            renderCell: (values) => (
-                <Box sx={{ display: "flex", justifyContent: "space-between", width: "170px" }}>
-                    <Button variant="contained"><Link style={{ color: "white", textDecoration: "none" }} to={`/admin/edit/user/${values.row._id}`}>Edit</Link></ Button>
-                    <Button onClick={(e) => deleteUserById(e, values.row._id)} variant="contained" color="error">Delete</Button>
-                </Box>
-            )
-        }
+        
     ];
 
     return (
@@ -76,9 +78,7 @@ const DashUsers = () => {
                 <Typography variant="h4" sx={{ color: "white", pb: 3 }}>
                     All users
                 </Typography>
-                <Box sx={{ pb: 2, display: "flex", justifyContent: "right" }}>
-                    <Button variant='contained' color="success" startIcon={<AddIcon />}> Create user</Button>
-                </Box>
+
                 <Paper sx={{ bgcolor: "#67e3b9" }} >
 
                     <Box sx={{ height: 400, width: '100%' }}>

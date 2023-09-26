@@ -15,6 +15,7 @@ exports.createJob = async (req,res,next)=>{
             jobType:req.body.jobType,
             user:req.user.id
         })
+        
 
         res.status(201).json({
             success:true,
@@ -92,7 +93,7 @@ exports.showJobs=async(req,res,next)=>{
     })
 
     let setUniqueLocation = [...new Set(locations)];
-    let locationFilter = locations !== '' ? locations : setUniqueLocations; 
+    let locationFilter = locations !== '' ? locations : setUniqueLocation; 
 
     const pageSize=5;
     const page = Number(req.query.pageNumber) || 1; 

@@ -6,7 +6,7 @@ import Navbar from '../Components/Navbar'
 import {useDispatch, useSelector} from 'react-redux';
 import { jobAction } from '../redux/actions/jobAction'
 import { useState } from 'react'
-import {useParams,Link} from 'react-router-dom'
+import {useParams,Link, useNavigate} from 'react-router-dom'
 import CardElement from '../Components/CardElement'
 import Footer from '../Components/Footer'
 import LoadingBox from '../Components/LoadingBox'
@@ -26,9 +26,18 @@ function Home() {
   const [page,setPage]=useState(1)
   const [cat,setCat]=useState('')
   const {keyword, location} = useParams(); 
+  const { userInfo } = useSelector(state => state.signIn);
+  const navigate=useNavigate();
 
   console.log(jobs);
-  
+  useEffect(() => {
+    if(userInfo){
+        navigate('/')
+    }else{
+        navigate('/login')
+    }
+}, []);
+
   useEffect(()=>{
     dispatch(jobAction(page,keyword,cat,location));
   },[page,keyword,cat,location])

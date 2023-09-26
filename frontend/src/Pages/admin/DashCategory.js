@@ -4,9 +4,10 @@ import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';
-import { jobTypeLoadAction } from '../../redux/actions/jobTypeAction';
+import { deleteJobType, jobTypeLoadAction } from '../../redux/actions/jobTypeAction';
 
 import moment from 'moment'
+import { toast } from 'react-toastify';
 
 
 const DashCategory = () => {
@@ -14,18 +15,20 @@ const DashCategory = () => {
 
     const dispatch = useDispatch();
 
+    
     useEffect(() => {
         dispatch(jobTypeLoadAction())
     }, []);
-
-
-    const { jobType, loading } = useSelector(state => state.jobTypeAll);
-    let data = [];
+    
+    
+    var { jobType, loading } = useSelector(state => state.jobTypeAll);
+    var data = [];
     data = (jobType !== undefined && jobType.length > 0) ? jobType : []
-
     //delete job by Id
-    const deleteJobCategoryById = (e, id) => {
-        console.log(id)
+    const deleteJobCategoryById = (id) => {
+        dispatch(deleteJobType(id))
+        toast.success("Job Category Deleted Successfully!")
+        // window.location.reload()
     }
 
     const columns = [
@@ -56,8 +59,7 @@ const DashCategory = () => {
             width: 200,
             renderCell: (values) => (
                 <Box sx={{ display: "flex", justifyContent: "space-between", width: "170px" }}>
-                    <Button variant="contained"><Link style={{ color: "white", textDecoration: "none" }} to={`/admin/edit/user/${values.row._id}`}>Edit</Link></ Button>
-                    < Button onClick={(e) => deleteJobCategoryById(e, values.row._id)} variant="contained" color="error">Delete</ Button>
+                    <Button onClick={(e) => deleteJobCategoryById(values.row._id)} variant="contained" color="error">Delete</Button>
                 </Box>
             )
         }
@@ -71,7 +73,7 @@ const DashCategory = () => {
                 Jobs category
             </Typography>
             <Box sx={{ pb: 2, display: "flex", justifyContent: "right" }}>
-                <Button variant="contained" color="success" startIcon={<AddIcon />}><Link style={{ color: "white", textDecoration: "none" }} to='/admin/category/create'>Create category</Link></ Button>
+                <Button variant="contained" color="success" startIcon={<AddIcon />}><Link style={{ color: "white", textDecoration: "none" }} to='/admin/category/create'>Create category</Link></Button>
             </Box>
             <Paper sx={{ bgcolor: "secondary.midNightBlue" }} >
 

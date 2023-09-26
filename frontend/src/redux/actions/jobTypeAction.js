@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CREATE_JOB_TYPE_FAIL, CREATE_JOB_TYPE_REQUEST, CREATE_JOB_TYPE_SUCCESS, JOB_TYPE_LOAD_FAIL, JOB_TYPE_LOAD_REQUEST, JOB_TYPE_LOAD_SUCCESS } from '../constants/jobTypeConstant';
+import { CREATE_JOB_TYPE_FAIL, CREATE_JOB_TYPE_REQUEST, CREATE_JOB_TYPE_SUCCESS, DELETE_JOB_TYPE_FAIL, DELETE_JOB_TYPE_REQUEST, DELETE_JOB_TYPE_SUCCESS, JOB_TYPE_LOAD_FAIL, JOB_TYPE_LOAD_REQUEST, JOB_TYPE_LOAD_SUCCESS } from '../constants/jobTypeConstant';
 import { toast } from "react-toastify";
 
 
@@ -42,4 +42,27 @@ export const createJobTypeAction = (jobtype) => async (dispatch) => {
         toast.error(error.response.data.error);
 
     }
+}
+
+
+export const deleteJobType=(id)=>async(dispatch)=>{
+
+    dispatch({ type: DELETE_JOB_TYPE_REQUEST })
+
+    try {
+        const { data } = await axios.delete(`/api/type/delete/${id}`,{withCredentials: true, credentials: 'include'})
+        dispatch({
+            type: DELETE_JOB_TYPE_SUCCESS,
+            payload:data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DELETE_JOB_TYPE_FAIL,
+            payload: error.response.data.error
+        })
+        toast.error(error.response.data.error);
+
+    }
+
 }

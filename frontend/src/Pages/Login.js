@@ -9,7 +9,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux'
 import { userSignInAction } from '../redux/actions/userAction'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const validationSchema = yup.object({
     email: yup
@@ -34,13 +34,10 @@ const LogIn = () => {
             if (userInfo.role === 1) {
                 navigate('/admin/dashboard');
             } else {
-                navigate('/user/dashboard');
+                navigate('/');
             }
         }
-
-        // if (isAuthenticated) {
-        //     navigate('/user/dashboard');
-        // }
+        
     }, [isAuthenticated])
     
 
@@ -66,9 +63,10 @@ const LogIn = () => {
 
                 <Box onSubmit={formik.handleSubmit} component="form" className='form_style border-style' >
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-                        <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
+                        <Avatar sx={{ m: 1, bgcolor: "primary.main"}}>
                             <LockClockOutlined />
                         </Avatar>
+                        <h2>SignIn</h2>
                         <TextField sx={{ mb: 3 }}
                             fullWidth
                             id="email"
@@ -102,6 +100,8 @@ const LogIn = () => {
                         />
 
                         <Button fullWidth variant="contained" type='submit' >Log In</Button>
+                        <Link to='/register' style={{margin:"5px 0px",color:"teal"}}>Don't have an account?</Link>
+
                     </Box>
                 </Box>
             </Box>

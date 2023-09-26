@@ -26,6 +26,7 @@ export const jobAction=(pageNumber,keyword='',cat='',location='')=>async(dispatc
 
 
 
+
 // single job action
 export const jobLoadSingleAction = (id) => async (dispatch) => {
     dispatch({ type: JOB_LOAD_SINGLE_REQUEST });

@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './Pages/Home';
 import NotFound from './Pages/NotFound';
 import { CssBaseline, ThemeProvider } from '@mui/material';
@@ -22,6 +22,8 @@ import DashCategory from './Pages/admin/DashCategory';
 import DashCreateJob from './Pages/admin/DashCreateJob';
 import DashCreateCategory from './Pages/admin/DashCreateCategory';
 import Register from './Pages/Register';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 
 
@@ -38,6 +40,9 @@ const DashCreateCategoryHOC = Layout(DashCreateCategory)
 
 
 const App = () => {
+   
+   
+
 
     return (
         <>

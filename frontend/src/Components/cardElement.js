@@ -9,10 +9,13 @@ import { IconButton, useTheme } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
+import { useSelector } from 'react-redux';
 
 
 const CardElement = ({ jobTitle, description, category, location, id }) => {
     const { palette } = useTheme();
+    const { userInfo } = useSelector(state => state.signIn);
+
     return (
         <Card sx={{ minWidth: 275, mb: 3, mt: 3,p:1 }}>
 
@@ -31,7 +34,7 @@ const CardElement = ({ jobTitle, description, category, location, id }) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button disableElevation variant='contained' size="small" startIcon={<AddIcon style={{color:"white"}}/>}><Link style={{ textDecoration: "none", color: "white", boxShadow: 0 }} to={`/job/${id}`}>More Details</Link></Button>
+                <Button disabled={!userInfo} disableElevation variant='contained' size="small" startIcon={<AddIcon style={{color:"white"}}/>}><Link style={{ textDecoration: "none", color: "white", boxShadow: 0 }} to={`/job/${id}`}>More Details</Link></Button>
             </CardActions>
         </Card>
     );
