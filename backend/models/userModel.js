@@ -90,7 +90,11 @@ const userSchema = new mongoose.Schema(
         this.password = await bcrypt.hash(this.password, 10)
     })
     
-    // compare user password
+
+  
+        
+        
+        // compare user password
     userSchema.methods.comparePassword = async function (enteredPassword) {
         return await bcrypt.compare(enteredPassword, this.password)
     }
@@ -104,3 +108,4 @@ const userSchema = new mongoose.Schema(
     }
 
 module.exports = mongoose.model("User",userSchema)
+// module.exports = mongoose.model("jobHistory",jobHistorySchema)

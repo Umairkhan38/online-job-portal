@@ -16,7 +16,6 @@ const errorHandler=require('./middleware/Error')
 
 //middleware
 app.use(morgan('dev'));
-
 app.use(bodyParser.json({limit:'5mb'}));
 app.use(bodyParser.urlencoded({
     limit:'5mb',
@@ -25,10 +24,9 @@ app.use(bodyParser.urlencoded({
 
 app.use(cookieParser());
 app.use(cors({ origin: true, credentials: true }));
-
-
 //port 
 const port = process.env.PORT || 8000;
+
 
 mongoose.connect(process.env.DATABASE,{
     useNewUrlParser:true,
@@ -36,6 +34,10 @@ mongoose.connect(process.env.DATABASE,{
     useCreateIndex:true,
     }).then(()=>console.log("database connected successfully"))
     .catch(err=>console.log("error occurred",err));
+
+
+
+
 
     //routes
     app.use('/api', authRoutes);

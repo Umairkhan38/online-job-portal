@@ -4,8 +4,9 @@ import { DataGrid, gridClasses, GridToolbar } from '@mui/x-data-grid';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment'
-import { allUserAction, deleteUserAction } from '../../redux/actions/userAction';
-
+import { allUserAction, deleteUserAction, updateUserStatus } from '../../redux/actions/userAction';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const DashUsers = () => {
 
@@ -18,14 +19,34 @@ const DashUsers = () => {
         dispatch(allUserAction());
     }, []);
 
-    
+    console.log("the data is ",data)
+        
+    const [status,setStatus]=useState('pending')
+
+    const getUserId = async(status,id)=>{
+        console.log("id ans status is ",id," ",status)
+        try{
+               const {data} = await axios.patch('http://localhost:8000/api/user/userStatus',{id,status})
+
+               toast.success("User Application Status updatedSuccessfully!");
+               setTimeout(() => {
+                   window.location.reload();
+
+               }, 2000);
+
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+ 
   
     const columns = [
 
         {
             field: '_id',
             headerName: 'User ID',
-            width: 150,
+            width: 220,
             editable: true,
         },
 
@@ -52,13 +73,30 @@ const DashUsers = () => {
         {
             field: 'jobHistory',
             headerName: 'Last Applied Job',
-            width: 200,
-            valueGetter: (params) => {
-                console.log("params is ",params)
-                return params?.value[(params?.value?.length)-1]?.title
+            width: 220,
+            renderCell: (params) => {
+                console.log("params status is ",params?.value[(params?.value?.length)-1]?.title)
+                return<>
+                    <span>{params?.value[(params?.value?.length)-1]?.title}</span>
+                </>
               }           
         },
+        {
+            field: "Application Status",
+            width: 180,
+            renderCell: (values) => {
+                // { console.log("values for app status id is  ",values)}
 
+                return <Box sx={{ display: "flex", justifyContent: "space-between", width: "170px" }}>
+                    <select name="selectedFruit" defaultValue={values.row?.jobHistory[values.row.jobHistory.length-1]?.applicationStatus} onChange={(e)=>getUserId(e.target.value,values.id)}>
+                    <option value="pending">Pending</option>
+                    <option value="accepted">Accept</option>
+                    <option value="rejected">Reject</option>
+                </select>
+                </Box>
+            }   
+        },
+      
         {
             field: 'createdAt',
             headerName: 'Creation date',
@@ -66,10 +104,10 @@ const DashUsers = () => {
             renderCell: (params) => (
                 moment(params.row.createdAt).format('YYYY-MM-DD HH:MM:SS')
             )
-        },
+        }
 
-        
     ];
+
 
     return (
         <>

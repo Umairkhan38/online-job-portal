@@ -127,6 +127,7 @@ export const userReducerSignUp = (state = {}, action) => {
 }
 
 
+
 // apply for a job reducer
 export const userApplyJobReducer = (state = {}, action) => {
     switch (action.type) {

@@ -1,6 +1,6 @@
 const express= require('express')
 const router = express.Router();
-const {allUsers, singleUser,editUser, deleteUser,createUserJobHistory} = require('../Controllers/userController');
+const {allUsers, singleUser,editUser, deleteUser,createUserJobHistory, updateUserStatus, updateStatus} = require('../Controllers/userController');
 const { isAuthenticated, isAdmin } = require('../middleware/auth');
 
 
@@ -16,6 +16,11 @@ router.delete('/admin/user/delete/:id', isAuthenticated, isAdmin, deleteUser);
 
 //api/user/jobhistory
 router.post('/user/jobhistory',isAuthenticated,createUserJobHistory)
+
+//api/user/userStatus
+router.patch('/user/userStatus',updateStatus);
+
+
 
 module.exports = router;
 

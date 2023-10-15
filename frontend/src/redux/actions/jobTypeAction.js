@@ -56,6 +56,7 @@ export const deleteJobType=(id)=>async(dispatch)=>{
             payload:data
         })
 
+        
     } catch (error) {
         dispatch({
             type: DELETE_JOB_TYPE_FAIL,
@@ -66,3 +67,4 @@ export const deleteJobType=(id)=>async(dispatch)=>{
     }
 
 }
+
