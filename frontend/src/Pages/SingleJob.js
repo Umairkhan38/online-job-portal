@@ -16,6 +16,8 @@ const SingleJob = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const { singleJob, loading } = useSelector(state => state.singleJob)
+    const { userInfo } = useSelector(state => state.signIn);
+
 
     const {user} = useSelector(state=>state.userProfile);
     console.log("user profile is ",user)
@@ -26,6 +28,9 @@ const SingleJob = () => {
     
     const { id } = useParams();
 
+    if(userInfo){
+        toast.success('If You want, you can update your resume in edit section before applying!')
+    }
 
     const arr=[{title:"Senior Java Developer",url:'https://youtube.com/playlist?list=PLu0W_9lII9agS67Uits0UnJyrYiXhDS6q&feature=shared'},
     {title:'dotNet Developer', url:'https://youtube.com/playlist?list=PL18HZjtdIA4DiYGQj1zst6myBAVE3wgMg&feature=shared'},

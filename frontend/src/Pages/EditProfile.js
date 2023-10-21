@@ -47,6 +47,7 @@ const EditProfile = () => {
         navigate('/login');
     }
 
+ 
     const handleFileChange = (event) => {
         formik.setFieldValue('imgFile', event.target.files[0]);
     };
@@ -77,7 +78,7 @@ const EditProfile = () => {
                 }, 2000);
             }
             catch(err){
-                console.error("Error updating user profile:", err);
+                toast.error(err);
 
             }
 
