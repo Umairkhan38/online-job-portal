@@ -20,8 +20,8 @@ const SingleJob = () => {
     const {user} = useSelector(state=>state.userProfile);
     console.log("user profile is ",user)
     
-    if(!user.imageUrl){
-        toast.error("please upload a resume in edit profile section to Apply!")
+    if(!user?.imageUrl){
+        toast.error("please upload a resume in edit-profile section to Apply!")
     }
     
     const { id } = useParams();

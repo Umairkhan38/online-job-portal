@@ -37,10 +37,16 @@ const validationSchema = yup.object({
 const EditProfile = () => {
     
     const { user } = useSelector(state => state.userProfile);
+    const { userInfo } = useSelector(state => state.signIn);
+
     const params = useParams()
     const dispatch = useDispatch();
     const navigate=useNavigate();
- 
+
+    if(!userInfo){
+        navigate('/login');
+    }
+
     const handleFileChange = (event) => {
         formik.setFieldValue('imgFile', event.target.files[0]);
     };
@@ -186,7 +192,7 @@ const EditProfile = () => {
       {formik.values.imgFile && formik.values.imgFile.name && (
         <p>Selected File: {formik.values.imgFile.name}</p>
       )}
-
+        <p style={{color:'red'}}>*please upload file in jpg,png,jpeg format only!*</p>
 
             <Button fullWidth variant="contained" type='submit'>Update</Button>       
                     </Box>
