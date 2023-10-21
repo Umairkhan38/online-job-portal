@@ -22,8 +22,10 @@ import DashCategory from './Pages/admin/DashCategory';
 import DashCreateJob from './Pages/admin/DashCreateJob';
 import DashCreateCategory from './Pages/admin/DashCreateCategory';
 import Register from './Pages/Register';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import EditProfile from './Pages/EditProfile';
+import { userProfileAction } from './redux/actions/userAction';
 
 
 
@@ -40,8 +42,12 @@ const DashCreateCategoryHOC = Layout(DashCreateCategory)
 
 
 const App = () => {
-   
-   
+
+    const dispatch=useDispatch();
+
+    useEffect(() => {
+        dispatch(userProfileAction());
+    }, []);
 
 
     return (
@@ -70,6 +76,7 @@ const App = () => {
                             <Route path='/user/dashboard' element={<UserRoute><UserDashboardHOC /></UserRoute>} />
                             <Route path='/user/jobs' element={<UserRoute><UserJobsHistoryHOC /></UserRoute>} />
                             <Route path='/user/info' element={<UserRoute><UserInfoDashboardHOC /></UserRoute>} />
+                            <Route path='/user/edit/:id' element={<EditProfile />} />
 
                             <Route path='*' element={<NotFound />} />
                         </Routes>

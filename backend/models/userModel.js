@@ -23,6 +23,7 @@ const jobHistorySchema = new mongoose.Schema({
     location:{
         type:String
     },
+
     interviewDate:{
         type:Date
     },
@@ -65,6 +66,9 @@ const userSchema = new mongoose.Schema(
                 /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
                 'Please add a valid email'
             ]
+        },
+        imageUrl:{
+            type:String
         },
         password: {
             type: String,

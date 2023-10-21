@@ -8,6 +8,7 @@ import { allUserAction, deleteUserAction, updateUserStatus } from '../../redux/a
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
+
 const DashUsers = () => {
 
     const dispatch = useDispatch();
@@ -31,9 +32,7 @@ const DashUsers = () => {
                toast.success("User Application Status updatedSuccessfully!");
                setTimeout(() => {
                    window.location.reload();
-
                }, 2000);
-
         }
         catch(err){
             console.log(err);
@@ -49,7 +48,6 @@ const DashUsers = () => {
             width: 220,
             editable: true,
         },
-
         {
             field: 'email',
             headerName: 'E_mail',
@@ -58,18 +56,9 @@ const DashUsers = () => {
         {
             field: 'firstName',
             headerName: 'firstName',
-            width: 150,
+            width: 120,
         },
-
-        {
-            field: 'role',
-            headerName: 'User status',
-            width: 150,
-            renderCell: (params) => (
-                params.row.role === 1 ? "Admin" : "Regular user"
-            )
-        },
-
+        
         {
             field: 'jobHistory',
             headerName: 'Last Applied Job',
@@ -80,13 +69,24 @@ const DashUsers = () => {
                     <span>{params?.value[(params?.value?.length)-1]?.title}</span>
                 </>
               }           
+            },
+            {
+            field: "User Resume",
+            width: 150,
+            renderCell: (values) => {
+                { console.log("values for resume id is  ",values)}
+                return <Box sx={{ display: "flex", justifyContent: "space-between", width: "170px" }}>
+                <Button disabled={!values.row.imageUrl} variant="contained" target="_blank" href={values.row.imageUrl} color="error">View Resume</Button>
+            </Box>
+            }
         },
+        
         {
             field: "Application Status",
             width: 180,
             renderCell: (values) => {
                 // { console.log("values for app status id is  ",values)}
-
+                
                 return <Box sx={{ display: "flex", justifyContent: "space-between", width: "170px" }}>
                     <select name="selectedFruit" defaultValue={values.row?.jobHistory[values.row.jobHistory.length-1]?.applicationStatus} onChange={(e)=>getUserId(e.target.value,values.id)}>
                     <option value="pending">Pending</option>
@@ -94,25 +94,24 @@ const DashUsers = () => {
                     <option value="rejected">Reject</option>
                 </select>
                 </Box>
-            }   
+            }
         },
-      
+        
         {
-            field: 'createdAt',
-            headerName: 'Creation date',
+            field: 'role',
+            headerName: 'User status',
             width: 150,
             renderCell: (params) => (
-                moment(params.row.createdAt).format('YYYY-MM-DD HH:MM:SS')
+                params.row.role === 1 ? "Admin" : "Regular user"
             )
         }
-
     ];
 
 
+    
     return (
         <>
             <Box >
-
                 <Typography variant="h4" sx={{ color: "white", pb: 3 }}>
                     All users
                 </Typography>

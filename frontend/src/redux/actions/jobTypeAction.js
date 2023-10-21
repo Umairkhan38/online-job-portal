@@ -45,6 +45,7 @@ export const createJobTypeAction = (jobtype) => async (dispatch) => {
 }
 
 
+
 export const deleteJobType=(id)=>async(dispatch)=>{
 
     dispatch({ type: DELETE_JOB_TYPE_REQUEST })

@@ -1,7 +1,9 @@
 const User = require('../models/userModel')
 const ErrorResponse = require('../utils/errorResponse')
 const nodemailer=require('nodemailer');
+const cloudinary = require('cloudinary').v2;
 require ('dotenv').config();
+
 
 
 //load all users
@@ -49,10 +51,60 @@ exports.singleUser = async (req, res, next) => {
     }
 }
 
+
+function isFileTypeSupported(type, supportedTypes){
+    return supportedTypes.includes(type);
+}
+
+
+
+async function uploadFileToCloudinary(file,folder,quality){
+    const options = {folder};
+    console.log("options is  ",options);
+    if(quality){
+        options.qaulity=quality;
+    }
+
+    options.resource_type = 'auto';
+    return await cloudinary.uploader.upload(file.tempFilePath,quality);
+
+} 
+
+
+
+
 //edit user
 exports.editUser = async (req, res, next) => {
+    
+    const {firstName,lastName,email} = req.body;
+
+    const file = req.files?.imgFile;
+    console.log("The req.body ", req.files);
+    
+    console.log("The file is ", file);
+
+    //validation
+    const supportedTypes = ["jpg","pdf","mp4","png","jpeg"];
+    
+    const fileType= file?.name.split('.')[1].toLowerCase();
+
+    if(!isFileTypeSupported(fileType, supportedTypes)){
+        return res.status(400).json({
+            success:false,
+            message:"the file type is not supported!"
+        })
+    }
+
+    const response = await uploadFileToCloudinary(file,"fileUploading");
+    console.log(response);
+    const result={
+       firstName,lastName,email,imageUrl:response.secure_url
+ 
+    }
+
+    
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const user = await User.findByIdAndUpdate(req.params.id,result, { new: true });
         res.status(200).json({
             success: true,
             user
@@ -80,17 +132,6 @@ exports.deleteUser = async (req, res, next) => {
 }
 
 
-async function uploadFileToCloudinary(file,folder,quality){
-    const options = {folder};
-    console.log("options is  ",options);
-    if(quality){
-        options.qaulity=quality;
-    }
-
-    options.resource_type = 'auto';
-    return await cloudinary.uploader.upload(file.tempFilePath,quality);
-
-} 
 
 
 
@@ -98,6 +139,7 @@ async function uploadFileToCloudinary(file,folder,quality){
 exports.createUserJobHistory = async (req, res, next) => {
 
     const {title, description, salary, location} = req.body;
+   
 
     try {
         const currentUser = await User.findOne({_id:req.user._id});
@@ -106,7 +148,8 @@ exports.createUserJobHistory = async (req, res, next) => {
             return next(new ErrorResponse("You must logged In",401))
         } else{
            
-
+            
+            
             const addJobHistory={
                 title,
                 description,
@@ -114,11 +157,12 @@ exports.createUserJobHistory = async (req, res, next) => {
                 location,
                 user:req.user._id
             }
-
+            
             currentUser.jobHistory.push(addJobHistory)
             await currentUser.save();
 
-
+            
+            // console.log("curr user is ",currentUser);
              //transport
         let transporter = nodemailer.createTransport({
             host:process.env.MAIL_HOST,
@@ -144,6 +188,7 @@ exports.createUserJobHistory = async (req, res, next) => {
             success: true,
             currentUser
         })
+
         next();
 
     } catch (error) {

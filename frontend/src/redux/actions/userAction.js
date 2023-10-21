@@ -23,6 +23,7 @@ import {
     USER_SIGNUP_REQUEST,
     USER_SIGNUP_SUCCESS
 } from '../constants/userConstant';
+import { useSelector } from 'react-redux';
 
 
 
@@ -88,6 +89,30 @@ export const userSignUpAction = (user) => async (dispatch) => {
 }
 
 
+// userUpdate action
+export const userUpdateAction = (user) => async (dispatch) => {
+
+    const { userInfo } = useSelector(state => state.signIn);
+
+    dispatch({ type: USER_SIGNUP_REQUEST });
+    try {
+        const { data } = await axios.post(`/api/user/edit/${userInfo.id}`, user);
+
+        dispatch({
+            type: USER_SIGNUP_SUCCESS,
+            payload: data
+        });
+        toast.success("Register Successfully!");
+    } catch (error) {
+        dispatch({
+            type: USER_SIGNUP_FAIL,
+            payload: error.response.data.error
+        });
+        toast.error(error.response.data.error);
+    }
+}
+
+
 //user profile action
 export const userProfileAction = () => async (dispatch) => {
     dispatch({ type: USER_LOAD_REQUEST });
@@ -130,6 +155,7 @@ export const allUserAction = () => async (dispatch) => {
 //user job apply action
 export const userApplyJobAction = (job) => async (dispatch) => {
     dispatch({ type: USER_APPLY_JOB_REQUEST });
+    console.log("job is ",job);
     try {
         const { data } = await axios.post("/api/user/jobhistory", job);
 

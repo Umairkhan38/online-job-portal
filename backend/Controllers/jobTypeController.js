@@ -2,6 +2,7 @@ const JobType = require('../models/jobTypeModel')
 const ErrorResponse = require('../utils/errorResponse')
 
 
+
 //create a job category
 exports.createJobType = async (req,res,next)=>{
 

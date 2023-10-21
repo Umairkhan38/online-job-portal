@@ -1,6 +1,6 @@
 import { Card, CardContent, Stack, Typography } from '@mui/material'
 import { Box, Container } from '@mui/system'
-import { useEffect,useState } from 'react'
+import React, { useEffect,useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import Footer from '../Components/Footer'
@@ -10,13 +10,21 @@ import { jobLoadSingleAction } from '../redux/actions/jobAction'
 import Button from '@mui/material/Button'
 import { userApplyJobAction } from '../redux/actions/userAction'
 import ReactPlayer from 'react-player';
-
+import { toast } from 'react-toastify'
 
 const SingleJob = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const { singleJob, loading } = useSelector(state => state.singleJob)
+
+    const {user} = useSelector(state=>state.userProfile);
+    console.log("user profile is ",user)
+    
+    if(!user.imageUrl){
+        toast.error("please upload a resume in edit profile section to Apply!")
+    }
+    
     const { id } = useParams();
-    const navigate=useNavigate();
 
 
     const arr=[{title:"Senior Java Developer",url:'https://youtube.com/playlist?list=PLu0W_9lII9agS67Uits0UnJyrYiXhDS6q&feature=shared'},
@@ -26,9 +34,8 @@ const SingleJob = () => {
     {title:'Frontend Developer', url:'https://youtube.com/playlist?list=PLbtI3_MArDOkNtOan8BQkG6P8wf6pNVz-&feature=shared'},
     {title:"Automation Tester - Cypress", url:"https://youtube.com/playlist?list=PL8VbCbavWfeG_QP9yIylsXOCb8CJunKU_&feature=shared"},
     {title:'Node.js Application Developer', url:'https://youtube.com/playlist?list=PL8p2I9GklV456iofeMKReMTvWLr7Ki9At&feature=shared'},
-    {title:"UI/UX Developer",url:"https://youtube.com/playlist?list=PLvDSYqFjjGrjIDkeaXwQPwBVKR3D4vsAH&feature=shared"}
+    {title:"UI/UX Developer",url:"https://youtube.com/playlist?list=PLvDSYqFjjGrjIDkeaXwQPwBVKR3D4vsAH&feature=shared"}]
     
-]
 
      
      useEffect(() => {
@@ -38,16 +45,20 @@ const SingleJob = () => {
  
     
     const applyForAJob = () => {
+        
+
         dispatch(userApplyJobAction({
             title: singleJob && singleJob.title,
             description: singleJob && singleJob.description,
             salary: singleJob && singleJob.salary,
-            location: singleJob && singleJob.location
+            location: singleJob && singleJob.location,
+
         }))
         setTimeout(()=>{
             navigate('/');
         },3000)
     }
+
 
     return (
         <>
@@ -92,7 +103,7 @@ const SingleJob = () => {
                             </Box>  
                             <Box sx={{ flex: 1, p: 2 }}>
                                 <Card sx={{ p: 2 }}>
-                                    <Button onClick={applyForAJob} sx={{ fontSize: "13px",backgroundColor:'green',color:'white' }} variant='contained'>Apply for this Job</Button>
+                                    <Button disabled={!user?.imageUrl} onClick={applyForAJob} sx={{ fontSize: "13px",backgroundColor:'green',color:'white' }} variant='contained'>Apply for this Job</Button>
                                 </Card>
                             </Box>
                         </Stack>

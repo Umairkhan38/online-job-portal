@@ -9,13 +9,15 @@ exports.signUp = async (req, res, next) => {
     if (userExist) {
         return next(new ErrorResponse("E-mail already registred", 400));
     }
+
     try {
         const user = await User.create(req.body);
         res.status(201).json({
             success: true,
             user
         })
-    } catch (error) {
+    } catch(error){
+
         next(error);
     }
 }
@@ -58,7 +60,8 @@ const sendTokenResponse = async (user, codeStatus, res) => {
         .cookie('token', token, { maxAge: 60 * 60 * 1000, httpOnly: true })
         .json({
             success: true,
-            role: user.role
+            role: user.role,
+            id:user._id
         })
 }
 

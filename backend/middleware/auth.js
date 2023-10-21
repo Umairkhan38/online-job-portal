@@ -5,7 +5,7 @@ require('dotenv').config()
 
 // check is user is authenticated
 exports.isAuthenticated = async (req, res, next) => {
-    const { token } = req.cookies;
+    const {token}  = req.cookies;
     
     // Make sure token exists
     if (!token) {

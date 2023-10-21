@@ -24,6 +24,12 @@ app.use(bodyParser.urlencoded({
 
 app.use(cookieParser());
 app.use(cors({ origin: true, credentials: true }));
+
+app.use(express.json());
+
+const fileupload = require('express-fileupload');
+app.use(fileupload({ useTempFiles : true,tempFileDir : '/tmp/'}));
+
 //port 
 const port = process.env.PORT || 8000;
 
@@ -35,16 +41,15 @@ mongoose.connect(process.env.DATABASE,{
     }).then(()=>console.log("database connected successfully"))
     .catch(err=>console.log("error occurred",err));
 
-
-
-
+    //cloud connection
+const cloudinary = require('./config/cloudinary');
+cloudinary.CloudinaryConnect();
 
     //routes
     app.use('/api', authRoutes);
     app.use('/api', userRoutes);
     app.use('/api',jobTypeRoutes);
     app.use('/api',jobRoutes);
-
     app.use(errorHandler)
 
 

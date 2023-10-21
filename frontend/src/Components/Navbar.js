@@ -103,7 +103,7 @@ const Navbar = () => {
                             onClick={handleCloseNavMenu}
                             sx={{ my: 2, color: 'white', display: 'block' }}>
                             <Link to="/register" style={{ color: 'white', textDecoration: "none" }}>
-                                Register
+                            {userInfo? 'Register' : 'Edit Profile'}
                             </Link>
                         </Button>
 
@@ -141,9 +141,15 @@ const Navbar = () => {
                         <Button
                             onClick={handleCloseNavMenu}
                             sx={{ my: 2, color: 'white', display: 'block' }}>
+                           { !userInfo?
                             <Link to="/register" style={{ color: 'white', textDecoration: "none" }}>
-                                Register
+                               Register
                             </Link>
+                            :
+                            <Link to={`/user/edit/${userInfo.id}`} style={{ color: 'white', textDecoration: "none" }}>
+                               Edit Profile
+                            </Link>}
+
                         </Button>
 
                     </Box>
@@ -177,7 +183,6 @@ const Navbar = () => {
                             <MenuItem onClick={handleCloseUserMenu}>
                                 <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/user/dashboard">User Dashboard</Link></Typography>
                             </MenuItem>
-                              {console.log("userInfo id ",userInfo)}
                             {
                                 !userInfo ?
 

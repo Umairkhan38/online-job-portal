@@ -1,7 +1,8 @@
 const express= require('express')
 const router = express.Router();
-const {allUsers, singleUser,editUser, deleteUser,createUserJobHistory, updateUserStatus, updateStatus} = require('../Controllers/userController');
+const {allUsers, singleUser,editUser, deleteUser,createUserJobHistory, updateStatus} = require('../Controllers/userController');
 const { isAuthenticated, isAdmin } = require('../middleware/auth');
+
 
 
 // Users Route 
@@ -19,6 +20,9 @@ router.post('/user/jobhistory',isAuthenticated,createUserJobHistory)
 
 //api/user/userStatus
 router.patch('/user/userStatus',updateStatus);
+
+//apui/user/edit/:id
+router.patch('/user/edit/:id',isAuthenticated, editUser);
 
 
 
